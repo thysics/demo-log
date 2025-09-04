@@ -4,8 +4,14 @@ from email_validator import validate_email as validate_email_lib, EmailNotValidE
 
 def validate_email(email):
     """Validate email format"""
+    # Special cases for localhost and IP addresses
+    if '@' in email:
+        local_part, domain = email.rsplit('@', 1)
+        if local_part and (domain == 'localhost' or (domain.replace('.', '').isdigit() and domain.count('.') == 3)):
+            return True, email
+    
     try:
-        valid = validate_email_lib(email)
+        valid = validate_email_lib(email, check_deliverability=False)
         return True, valid.email
     except EmailNotValidError as e:
         return False, str(e)

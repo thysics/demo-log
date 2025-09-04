@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
 from ..models.user import User, db
 from ..utils import validate_email, validate_password, success_response, error_response
@@ -25,18 +25,23 @@ def register():
     
     # Check if user already exists
     if User.query.filter_by(email=data['email']).first():
+        current_app.logger.warning(f"Registration attempt with existing email: {data['email']}")
         return error_response("User already exists", status_code=409)
     
-    # Create new user
-    new_user = User(
-        name=data['name'],
-        email=data['email'],
-        password=data['password']
-    )
-    
     try:
+        current_app.logger.info(f"Attempting to register new user with email: {data['email']}")
+        
+        # Create new user
+        new_user = User(
+            name=data['name'],
+            email=data['email'],
+            password=data['password']
+        )
+        
         db.session.add(new_user)
         db.session.commit()
+        
+        current_app.logger.info(f"User registered successfully: {new_user.id}")
         
         # Generate tokens
         access_token = create_access_token(identity=new_user.id)
@@ -49,6 +54,7 @@ def register():
         }, "User registered successfully", status_code=201)
     except Exception as e:
         db.session.rollback()
+        current_app.logger.error(f"Error creating user: {str(e)}")
         return error_response(f"Error creating user: {str(e)}", status_code=500)
 
 @auth_bp.route('/login', methods=['POST'])

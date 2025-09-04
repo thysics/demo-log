@@ -64,6 +64,10 @@ export const AuthProvider = ({ children }) => {
         setCurrentUser(user);
         setIsAuthenticated(true);
         return true;
+      } else {
+        // Handle case where API returns success: false
+        setError(response.data.message || 'Registration failed');
+        return false;
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');

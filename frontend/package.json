@@ -4,7 +4,7 @@
   "description": "Frontend for Task Management App",
   "main": "src/index.js",
   "scripts": {
-    "start": "esbuild src/index.js --bundle --outfile=public/bundle.js --servedir=public --define:process.env.NODE_ENV='\"development\"' --define:process.env.REACT_APP_API_URL='\"http://localhost:5000\"' --loader:.js=jsx --watch",
+    "start": "esbuild src/index.js --bundle --outfile=public/bundle.js --servedir=public --define:process.env.NODE_ENV='\"development\"' --define:process.env.REACT_APP_API_URL='\"http://localhost:5000\"' --loader:.js=jsx",
     "build": "node build.js"
   },
   "dependencies": {

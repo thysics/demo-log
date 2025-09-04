@@ -1,5 +1,9 @@
 import os
 from datetime import timedelta
+import pathlib
+
+# Get the absolute path to the project root directory
+BASE_DIR = pathlib.Path(__file__).parent.parent.absolute()
 
 class Config:
     # Flask configuration
@@ -8,7 +12,9 @@ class Config:
     TESTING = False
     
     # Database configuration
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///taskmanager.db')
+    # Use absolute path for SQLite database to ensure consistent location
+    DB_PATH = os.path.join(BASE_DIR, 'taskmanager.db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', f'sqlite:///{DB_PATH}')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # JWT configuration
@@ -28,7 +34,9 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
+    # Use absolute path for test database as well
+    TEST_DB_PATH = os.path.join(BASE_DIR, 'test.db')
+    SQLALCHEMY_DATABASE_URI = f'sqlite:///{TEST_DB_PATH}'
 
 class ProductionConfig(Config):
     # In production, these should be set as environment variables

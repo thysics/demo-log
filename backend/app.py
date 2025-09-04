@@ -32,7 +32,13 @@ def create_app(config_name=None):
     if not app.debug:
         handler = logging.StreamHandler()
         handler.setLevel(logging.INFO)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
         app.logger.addHandler(handler)
+        app.logger.setLevel(logging.INFO)
+    else:
+        # Even in debug mode, we want to see INFO logs
+        app.logger.setLevel(logging.INFO)
     
     # Register blueprints
     app.register_blueprint(auth_bp)
@@ -41,7 +47,13 @@ def create_app(config_name=None):
     
     # Create database tables
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+            app.logger.info("Database tables created successfully")
+        except Exception as e:
+            app.logger.error(f"Error creating database tables: {str(e)}")
+            # This is critical, so we should re-raise the exception
+            raise
     
     # Error handlers
     @app.errorhandler(404)
