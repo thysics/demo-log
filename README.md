@@ -43,6 +43,36 @@ A clean, responsive web application for managing tasks with user authentication,
 - Bootstrap for responsive design
 - FontAwesome icons
 
+## Project Structure
+
+```
+/
+├── backend/                 # Express.js backend
+│   ├── src/
+│   │   ├── controllers/     # Route handlers
+│   │   ├── models/          # Database models
+│   │   ├── routes/          # API routes
+│   │   ├── middleware/      # Middleware functions
+│   │   ├── config/          # Configuration files
+│   │   ├── utils/           # Utility functions
+│   │   ├── db/              # Database setup and migrations
+│   │   └── index.js         # Entry point
+│   ├── .env                 # Environment variables
+│   └── package.json         # Backend dependencies
+│
+└── frontend/                # React frontend
+    ├── public/              # Static files
+    ├── src/
+    │   ├── components/      # React components
+    │   ├── pages/           # Page components
+    │   ├── services/        # API services
+    │   ├── utils/           # Utility functions
+    │   ├── context/         # React context
+    │   ├── App.js           # Main App component
+    │   └── index.js         # Entry point
+    └── package.json         # Frontend dependencies
+```
+
 ## Installation
 
 ### Prerequisites
