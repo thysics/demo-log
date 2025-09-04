@@ -47,30 +47,56 @@ A clean, responsive web application for managing tasks with user authentication,
 
 ```
 /
-├── backend/                 # Express.js backend
-│   ├── src/
-│   │   ├── controllers/     # Route handlers
-│   │   ├── models/          # Database models
-│   │   ├── routes/          # API routes
-│   │   ├── middleware/      # Middleware functions
-│   │   ├── config/          # Configuration files
-│   │   ├── utils/           # Utility functions
-│   │   ├── db/              # Database setup and migrations
-│   │   └── index.js         # Entry point
-│   ├── .env                 # Environment variables
-│   └── package.json         # Backend dependencies
+├── backend/                 # Flask backend
+│   ├── app.py               # Main application file
+│   ├── config.py            # Configuration file
+│   ├── models/              # Database models
+│   │   ├── __init__.py
+│   │   ├── project.py
+│   │   ├── task.py
+│   │   └── user.py
+│   ├── routes/              # API routes
+│   │   ├── __init__.py
+│   │   ├── auth.py
+│   │   ├── projects.py
+│   │   └── tasks.py
+│   └── utils/               # Utility functions
+│       ├── __init__.py
+│       ├── responses.py
+│       └── validation.py
 │
-└── frontend/                # React frontend
-    ├── public/              # Static files
-    ├── src/
-    │   ├── components/      # React components
-    │   ├── pages/           # Page components
-    │   ├── services/        # API services
-    │   ├── utils/           # Utility functions
-    │   ├── context/         # React context
-    │   ├── App.js           # Main App component
-    │   └── index.js         # Entry point
-    └── package.json         # Frontend dependencies
+├── frontend/                # React frontend
+│   ├── build.js             # Build script
+│   ├── package.json         # Frontend dependencies
+│   ├── public/              # Static files
+│   │   ├── index.html
+│   │   └── styles.css
+│   └── src/                 # Source code
+│       ├── components/      # React components
+│       │   ├── auth/        # Authentication components
+│       │   │   ├── Login.js
+│       │   │   ├── Profile.js
+│       │   │   └── Register.js
+│       │   ├── dashboard/   # Dashboard components
+│       │   │   └── Dashboard.js
+│       │   ├── layout/      # Layout components
+│       │   │   ├── Navbar.js
+│       │   │   └── NotFound.js
+│       │   ├── projects/    # Project components
+│       │   │   ├── ProjectForm.js
+│       │   │   └── ProjectList.js
+│       │   └── tasks/       # Task components
+│       │       ├── TaskForm.js
+│       │       └── TaskList.js
+│       ├── contexts/        # React contexts
+│       │   └── AuthContext.js
+│       ├── utils/           # Utility functions
+│       │   └── api.js
+│       ├── App.js           # Main App component
+│       └── index.js         # Entry point
+│
+├── requirements.txt         # Python dependencies
+└── run.py                   # Entry point for the Flask application
 ```
 
 ## Installation
